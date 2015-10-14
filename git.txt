@@ -1,4 +1,59 @@
-﻿Git使用2
+﻿Git使用
+
+Git的使用
+首先需要配置用户和邮箱
+
+
+1,创建本地仓库filename可以理解为一个目录
+mkdir filename
+cd filename
+
+2,初始化git
+Git init
+可以在filename中找到一个隐藏的.git文件
+添加文件到git仓库,分两步
+1,使用命令 git add <file> ,注意,可以反复多次使用,添加多个文件,将文件从工作区放到暂存区(stage /index)
+2,使用命令 git commit  或git commit –m “注释”,将暂存区提交到当前分支
+
+3,git status告诉你有文件修改过,用git diff 可以查看修改内容
+
+
+4,HEAD指向的版本是当前的版本,因此,Git允许我们在版本的历史间穿梭,使用命令 git reset –hard commit_id.
+穿梭前,用git log可以查看提交历史,以便回到哪个版本.
+要重返未来,用git reflog 查看命令历史,以便要回到哪个版本
+5,git log命令显示从最近到最远的提交日志，若闲输出信息太多，可以可以这样输入
+Git log --pretty=oneline
+首先，Git必须知道当前版本是哪个版本，在Git中，用HEAD表示当前版本，也就是最新的提交，上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
+  回退到上一个版本，git reset –hard HEAD^
+  回到指定的版本，git reset –hard 版本号
+6，git中提供了一个git reflog来记录你的每一次命令
+
+7,git跟踪并管理的是修改，而非文件
+8,git修改的撤销
+查看当前版本和版本仓库中的不同
+Git diff HEAD readme.txt
+命令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+总之，就是让这个文件回到最近一次git commit或git add时的状态。
+Git reset HEAD file，可以把暂存区的修改撤销掉（unstge）,重新放回工作区;
+git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。
+	场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+9,删除文件
+Rm test.txt
+Git rm test.txt
+Git  commit –m “remove test.txt”
+
+
+Git checkout – test.txt
+
+
+
+
+
+
+
 1，	远程仓库
 由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置：
 第1步：创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key：
@@ -89,19 +144,18 @@ Git tag v1.0
 还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：
 $ git tag -a v0.1 -m "version 0.1 released" 3628164:最后数字是ID
 
-•	命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
-•	git tag -a <tagname> -m "blablabla..."可以指定标签信息；
-•	git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
-•	命令git tag可以查看所有标签。
+	命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+	git tag -a <tagname> -m "blablabla..."可以指定标签信息；	git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
+	命令git tag可以查看所有标签。
 
-•	命令git push origin <tagname>可以推送一个本地标签；
-•	命令git push origin --tags可以推送全部未推送过的本地标签；
-•	命令git tag -d <tagname>可以删除一个本地标签；
-•	命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
-•	忽略某些文件时，需要编写.gitignore；
-•	.gitignore文件本身要放到版本库里，并且可以对.gitignore做版本管理！
+	命令git push origin <tagname>可以推送一个本地标签；
+	命令git push origin --tags可以推送全部未推送过的本地标签；
+	命令git tag -d <tagname>可以删除一个本地标签；
+	命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
+	忽略某些文件时，需要编写.gitignore；
+	.gitignore文件本身要放到版本库里，并且可以对.gitignore做版本管理！
 
-•	给Git配置好别名，就可以输入命令时偷个懒。我们鼓励偷懒。
+	给Git配置好别名，就可以输入命令时偷个懒。我们鼓励偷懒。
 
 4.然后就写规则来操作要忽略的文件了。.gitignore文件过滤有两种模式，开放模式和保守模式
 
@@ -145,4 +199,11 @@ eg：
 4.3.配置.gitignore 的简易原则
 
 采用共享模式与保守模式结合配置的办法。eg：一个文件夹下有很多文件夹和文件，而我只想跟踪其中的一个文件，这样设置就可以满足这种情况，先用共享模式把整个目录 都设置为不跟踪，然后再用保守模式把这个文件夹中想要跟踪的文件设置为被跟踪，配置很简单，就可以跟踪想要跟踪的文件。
+
+
+
+
+
+
+
 
