@@ -1,6 +1,8 @@
 ﻿Git使用
-#####
 
+
+
+1.git commit -a 相当于运行 git add 把所有当前目录下的文件加入暂存区域再运行。git commit1.
 
 Git的使用
 首先需要配置用户和邮箱
