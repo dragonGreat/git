@@ -1,7 +1,25 @@
 ﻿Git使用
+#####
+
 
 Git的使用
 首先需要配置用户和邮箱
+git config --global user.name 'name'
+git config --global user.email email
+
+查看配置信息：
+git config --list     所有
+git config user.name  单个
+
+然后设置公钥
+ssh-keygen -t rsa -C "email"
+复制id_rsa.pub到github中
+
+注意 ： git clone会自动创建origin远程仓库别名，并指向相应的远程仓库
+
+
+1.git中的提交 省略add  commit
+  git commit -a -m "notion"
 
 
 1,创建本地仓库filename可以理解为一个目录
@@ -87,6 +105,25 @@ Git checkout master 切换到master分支
 将dev分支合并到master上
 Git merge dev
 
+1.查看远程分支
+git branch -a   远程分支用红色表示出来
+
+2，删除远程分支
+git push origin --delete <branchName>
+
+git push origin --delete tag <tagname>
+
+
+推送一个空分支到远程分支，其实就是相当于删除远程分支
+git push origin :<branchName>
+
+重命名本地分支：
+git branch -m A B  :将A改为B
+
+
+创建远程origin的dev分支到本地
+git checkout -b dev  origin/dev
+##
 
 删除分支
 Git branch –d dev
